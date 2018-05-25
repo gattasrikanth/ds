@@ -46,9 +46,16 @@ function printList() {
         return;
     }
     var result = list.printList();
+    var output = '[';
     if(result.code == 0) {
-        showList.innerHTML = result.result;
+        var length = result.result.length
+        for (var i = 0; i < length; i++) {
+            output += "'" + result.result[i]  + "'";
+            if( i + 1 != length)
+             output += ", "
+        }
     }
+    showList.innerHTML = output + ']';
 }
 function log(message) {
     footer.innerHTML += '<br>' + message;
