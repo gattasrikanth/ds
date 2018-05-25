@@ -1,0 +1,7 @@
+body {
+    font-family: 'Roboto';
+}
+.footer {
+    position: absolute;
+    top: 50%;
+}

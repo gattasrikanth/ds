@@ -1,9 +1,56 @@
+<head>
+    <script src="lib/SinglyLinkedList.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+</head>
 <h3>Singly Linked List</h3>
-<br>
-<div>Your list is:</div>
-
+<br><h4>Here is your list:</h4>
+<div id='showList'></div>
 <br><h4>List Actions:</h4>
-<input type='text'>Add Item</input>
+Create a list of
+    <select id ="listType">
+        <option>Integers</option>
+        <option>Strings</option>
+    </select>
+<button onclick="initList()">Create</button>
+<br>
+Add Item to your list: <input type="text" id="addItem"></input><button onclick="addItemToList()">Add</button>
+<div class='footer' id='console'></div>
 <script>
+var list = null;
+var footer = document.getElementById('console');
+var showList = document.getElementById('showList');
+function initList() {
+    var listType = document.getElementById("listType").value;
+    list = new SinglyLinkedList(listType);
+    log('Your List is created.')
+}
 
+function addItemToList() {
+    var newListItem = document.getElementById('addItem').value;
+    log("Received '" + newListItem + "' to Add to your list");
+    if(!list) {
+        log("It looks like your list is not defined. Create a list first.");
+        return;
+    }
+    if (newListItem) {
+        var result = list.addItem(newListItem);
+        log(result.success)
+    }
+    else log("Please enter a value to be added.")
+    printList();
+}
+
+function printList() {
+    if(!list) {
+        showList.innerHTML = "Your list is EMPTY"
+        return;
+    }
+    var result = list.printList();
+    if(result.code == 0) {
+        showList.innerHTML = result.result;
+    }
+}
+function log(message) {
+    footer.innerHTML += '<br>' + message;
+}
 </script>
