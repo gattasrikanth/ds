@@ -67,7 +67,7 @@ SinglyLinkedList.prototype.printList = function() {
     message.result = [];
     while(currentNode) {
         message.result.push(currentNode.data);
-        //currentNode = currentNode.next;
+        currentNode = currentNode.next;
     }
     message.code = 0;
     return message
