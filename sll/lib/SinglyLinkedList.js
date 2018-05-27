@@ -49,6 +49,75 @@ SinglyLinkedList.prototype.addItem = function(value) {
 }
 
 /**
+ * Removes the given value from the list.
+ * Pseuocode:
+ * If head is null return.
+ * Removing an item at head.??
+ * else traverse the list to find a match. Once the match is find.
+ * set prevnode next = current.next 
+ * @param {value tobe deleted from the list} value 
+ */
+SinglyLinkedList.prototype.removeItem = function(value) {
+    var currentNode = this.HEAD;
+    if(!currentNode) {
+        message.failure = "Your list is empty";
+        message.failure = -1
+        return message;
+    }
+    //Removing a HEAD node.
+    if(currentNode.data == value) {
+        this.HEAD = currentNode.next;
+        currentNode = null;
+        message.success  = "Element found at HEAD and removed."
+        message.code = 0;
+        return message;
+    }
+    var previousNode;
+    while(currentNode.next) {
+        previousNode = currentNode;
+        currentNode = currentNode.next;
+        if(currentNode.data == value) {
+            previousNode.next = currentNode.next;
+            currentNode = null;
+            message.success = "Node found and deleted."
+            message.code = 0;
+            return message;
+        }
+        //currentNode = currentNode.next;
+    }
+    //End of the list reached and no match found.
+    message.failure = "No Element found."
+    message.success = null;
+    message.code = -1
+    return message;
+}
+
+/**
+ * To reverse the entire list using recursion.
+ * PseudoCode:
+ * Take two nodes and revers the link recursively.
+ */
+SinglyLinkedList.prototype.ReverseList_Recursion = function() {
+    var currentNode = this.HEAD;
+    var previousNode = null;
+    this.ReverseList(previousNode, currentNode);
+}
+
+SinglyLinkedList.prototype.ReverseList = function (previousNode, currentNode) {
+    // Checking END of the List and Set HEAD to the last Node.
+    // Exit/Base Condition for the recussion.
+    if(!currentNode.next) {
+        this.HEAD = currentNode;
+        return;
+    }
+    previousNode = currentNode;
+    currentNode = currentNode.next;
+    this.ReverseList(previousNode, currentNode);
+    previousNode.next = null;
+    currentNode.next = previousNode;
+    return;
+}
+/**
  * To print the complete list.
  * In our case, simply return a array of items to the caller.
  * 

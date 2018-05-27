@@ -1,9 +1,10 @@
 <head>
-    <script src="lib/SinglyLinkedList.js"></script>
+<script src="lib/SinglyLinkedList.js"></script>
     <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
 </head>
 <h3>Singly Linked List</h3>
-<br><h4>Here is your list:</h4>
+<br>
+<button onclick="resetList()">Reset List</button><h4>Here is your list items:</h4>
 <div id='showList'></div>
 <br><h4>List Actions:</h4>
 Create a list of
@@ -14,9 +15,17 @@ Create a list of
 <button onclick="initList()">Create</button>
 <br>
 Add Item to your list: <input type="text" id="addItem"></input><button onclick="addItemToList()">Add</button>
+<br>
+Remove Item from your list (By Value): <input type="text" id="removeItem"></input><button onclick="removeItemFromList()">Remove</button>
+<br>
+Print Reverse of the list (Recursively):<button onclick="reverseList()">Reverse My List</button>
 <div class='footer' id='console'></div>
+
+
+
 <script>
 var list = null;
+var logLines = 0;
 var footer = document.getElementById('console');
 var showList = document.getElementById('showList');
 function initList() {
@@ -24,7 +33,11 @@ function initList() {
     list = new SinglyLinkedList(listType);
     log('Your List is created.')
 }
-
+printList();
+function resetList() {
+    list = null;
+    printList();
+}
 function addItemToList() {
     var newListItem = document.getElementById('addItem').value;
     log("Received '" + newListItem + "' to Add to your list");
@@ -40,6 +53,24 @@ function addItemToList() {
     printList();
 }
 
+function removeItemFromList() {
+    var removeItem = document.getElementById('removeItem').value;
+    log('Received ' + removeItem + 'will be deleted from your list');
+    if(!list) {
+        log("It looks like your list is empty");
+        return
+    }
+    if(removeItem) {
+        var result = list.removeItem(removeItem);
+        if (result.success) log(result.success)
+        if (result.failure) log(result.failure)
+    } else log("Please enter a item to remove.")
+    printList();
+}
+function reverseList() {
+    list.ReverseList_Recursion();
+    printList()
+}
 function printList() {
     if(!list) {
         showList.innerHTML = "Your list is EMPTY"
@@ -58,6 +89,11 @@ function printList() {
     showList.innerHTML = output + ']';
 }
 function log(message) {
+    if(logLines > 10) {
+        footer.innerHTML = '';
+        logLines = 0;
+    }
     footer.innerHTML += '<br>' + message;
+    logLines++;
 }
 </script>
