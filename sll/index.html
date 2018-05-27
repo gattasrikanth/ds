@@ -20,6 +20,8 @@ Add Item to your list: At Index: <input type="number" id="addItemIndex" value=0>
 Data    <input type="text" id="addItemValue">
 </input><button onclick="addItemToListAtIndex()">Add</button>
 <br>
+Remove Item to your list: At Index: <input type="number" id="removeItemIndex" value=0><button onclick="removeItemFromListAtIndex()">Remove</button>
+<br>
 Remove Item from your list (By Value): <input type="text" id="removeItem"></input><button onclick="removeItemFromList()">Remove</button>
 <br>
 Print Reverse of the list (Recursively #logic1):<button onclick="reverseList1()">Reverse My List</button>
@@ -89,6 +91,17 @@ function removeItemFromList() {
         if (result.success) log(result.success)
         if (result.failure) log(result.failure)
     } else log("Please enter a item to remove.")
+    printList();
+}
+
+function removeItemFromListAtIndex() {
+    var index = Id("removeItemIndex").value;
+    if(index < 0) {
+        log("Invalid index.")
+        return;
+    }
+    var result = list.removeItemFromListAtIndex(index);
+    log(result.success)
     printList();
 }
 function reverseList1() {

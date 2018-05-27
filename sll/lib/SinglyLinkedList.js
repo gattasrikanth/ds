@@ -120,6 +120,36 @@ SinglyLinkedList.prototype.removeItem = function(value) {
     return message;
 }
 
+SinglyLinkedList.prototype.removeItemFromListAtIndex = function(index) {
+    var currentNode = this.HEAD;
+    if(!currentNode) {
+        message.failure = "Your list is empty";
+        message.failure = -1
+        return message;
+    }
+    //Removing a HEAD node.
+    if (index == 0) {
+        this.HEAD = currentNode.next;
+        currentNode = null;
+        message.success  = "Element at Index (0), HEAD is removed. New HEAD updated."
+        message.code = 0;
+        return message;
+    }
+    //Removing at any other position:
+    var position = 0;
+    while(currentNode) {
+        if(position + 1 == index) {
+            var temp = currentNode.next;
+            currentNode.next = temp.next;
+            temp = null;
+            message.success = "Node found and deleted."
+            message.code = 0;
+            return message;
+        }
+        currentNode = currentNode.next;
+        position++;
+    }
+}
 /**
  * To reverse the entire list using recursion.
  * PseudoCode:
