@@ -48,6 +48,34 @@ SinglyLinkedList.prototype.addItem = function(value) {
     return message;
 }
 
+SinglyLinkedList.prototype.addItemToListAtIndex = function (data, index) {
+    var currentNode = this.HEAD;
+    var node = new Node(data);
+    //If insearting at head.
+    if(index == 0) {
+        node.next = currentNode;
+        this.HEAD = node;
+        message.success = "Node inserted at HEAD";
+        message.failure = null
+        message.code = 0;
+        return message;
+    }
+
+    var position = 0;
+
+    while (currentNode) {
+        if(position + 1 == index) {
+            node.next = currentNode.next;
+            currentNode.next = node;
+            message.success = "Node inserted at index: " + index;
+            return message;
+        }
+        currentNode = currentNode.next;
+        position++;
+    }
+
+}
+
 /**
  * Removes the given value from the list.
  * Pseuocode:
@@ -97,7 +125,7 @@ SinglyLinkedList.prototype.removeItem = function(value) {
  * PseudoCode:
  * Take two nodes and revers the link recursively.
  */
-SinglyLinkedList.prototype.ReverseList_Recursion = function() {
+SinglyLinkedList.prototype.ReverseList_Recursion_Logic1 = function() {
     var currentNode = this.HEAD;
     var previousNode = null;
     this.ReverseList(previousNode, currentNode);
@@ -116,6 +144,25 @@ SinglyLinkedList.prototype.ReverseList = function (previousNode, currentNode) {
     previousNode.next = null;
     currentNode.next = previousNode;
     return;
+}
+
+SinglyLinkedList.prototype.ReverseList_Recursion_Logic2 = function() {
+    var currentNode = this.HEAD;
+    this.ReverseNode(currentNode);
+    currentNode.next = null;
+    return;
+}
+
+SinglyLinkedList.prototype.ReverseNode = function(currentNode) {
+    //Basecase: if reached end of the list then set node as HEAD node.
+    if (!currentNode.next) {
+        this.HEAD = currentNode;
+        return;
+    }
+    this.ReverseNode(currentNode.next);
+    var temp = currentNode.next;
+    temp.next = currentNode;
+    currentNode.next = null;
 }
 /**
  * To print the complete list.

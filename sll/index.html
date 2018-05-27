@@ -16,9 +16,15 @@ Create a list of
 <br>
 Add Item to your list: <input type="text" id="addItem"></input><button onclick="addItemToList()">Add</button>
 <br>
+Add Item to your list: At Index: <input type="number" id="addItemIndex" value=0>
+Data    <input type="text" id="addItemValue">
+</input><button onclick="addItemToListAtIndex()">Add</button>
+<br>
 Remove Item from your list (By Value): <input type="text" id="removeItem"></input><button onclick="removeItemFromList()">Remove</button>
 <br>
-Print Reverse of the list (Recursively):<button onclick="reverseList()">Reverse My List</button>
+Print Reverse of the list (Recursively #logic1):<button onclick="reverseList1()">Reverse My List</button>
+<br>
+Print Reverse of the list (Recursively #logic2):<button onclick="reverseList2()">Reverse My List</button>
 <div class='footer' id='console'></div>
 
 
@@ -53,6 +59,24 @@ function addItemToList() {
     printList();
 }
 
+function addItemToListAtIndex() {
+    var index = Id("addItemIndex").value;
+    var data = Id("addItemValue").value;
+    if(index < 0) {
+        log("Invalid index.")
+        return;
+    }
+    if(!data) {
+        log("Please enter a value to be added.")
+        return;
+    }
+
+    var result = list.addItemToListAtIndex(data, index);
+    log(result.success);
+    printList()
+
+}
+
 function removeItemFromList() {
     var removeItem = document.getElementById('removeItem').value;
     log('Received ' + removeItem + 'will be deleted from your list');
@@ -67,9 +91,14 @@ function removeItemFromList() {
     } else log("Please enter a item to remove.")
     printList();
 }
-function reverseList() {
-    list.ReverseList_Recursion();
+function reverseList1() {
+    list.ReverseList_Recursion_Logic1();
     printList()
+}
+
+function reverseList2() {
+    list.ReverseList_Recursion_Logic2();
+    printList();
 }
 function printList() {
     if(!list) {
@@ -87,6 +116,13 @@ function printList() {
         }
     }
     showList.innerHTML = output + ']';
+}
+
+/**
+ * Utility function to getElementById.
+*/
+function Id(id) {
+    return document.getElementById(id);
 }
 function log(message) {
     if(logLines > 10) {
