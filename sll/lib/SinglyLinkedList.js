@@ -198,7 +198,9 @@ SinglyLinkedList.prototype.middleOfTheList1 = function() {
 
     var currentNode = this.HEAD;
     var length = 0;
+    var step = 0;
     while(currentNode) {
+        step++;
         length++;
         currentNode = currentNode.next;
     }
@@ -206,9 +208,11 @@ SinglyLinkedList.prototype.middleOfTheList1 = function() {
     currentNode = this.HEAD;
     length = parseInt(length/2);
     while(index != length) {
+        step++;
         currentNode = currentNode.next;
         index++;
     }
+    log("In while loop " + step + " times")
     message.success = "Middle of the list is: " + currentNode.data;
     message.code = 0;
     message.failure = null;
@@ -229,10 +233,13 @@ SinglyLinkedList.prototype.middleOfTheList2 = function() {
     if(!currentNode) {
         return returnEmptyListObj();
     }
+    var step=0;
     while (fastPointer && fastPointer.next) {
+        step++;
         slowPointer = slowPointer.next;
         fastPointer = fastPointer.next.next;
     }
+    log("In while loop " + step + " times")
     message.success = "Middle of the list is: " + slowPointer.data;
     message.failure = null, message.code = 0;
     return message;
@@ -250,13 +257,16 @@ SinglyLinkedList.prototype.middleOfTheList3 = function() {
     }
     var counter = 0;
     var midNode = currentNode;
+    var step = 0;
     while(currentNode) {
+    step++;
         if(counter % 2  == 1) {
             midNode = midNode.next;
         }
         currentNode = currentNode.next;
         counter++;
     }
+    log("In while loop " + step + " times")
     message.success = "Middle of the list is: " + midNode.data;
     message.failure = null, message.code = 0;
     return message;
