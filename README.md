@@ -6,7 +6,7 @@ Singly Linked List
 * Insert Element at index.
 * Delete Element at index.
 
-<a href="">Find the middle element in Singly Linked List.</a>
+<a href="https://gattasrikanth.github.io/ds/sll/finding_middle_of_the_list/" tartget="_blank">Find the middle element in Singly Linked List.</a>
 <br>
 ##### Solution #1
 * Traverse the list till the end node
