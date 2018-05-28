@@ -32,7 +32,6 @@ SinglyLinkedList.prototype.addItem = function(value) {
     if(!currentNode) {
         this.HEAD = node;
         this._length++;
-
         message.success = "Item added at HEAD."
         message.code = "0"
         return message;
@@ -88,9 +87,7 @@ SinglyLinkedList.prototype.addItemToListAtIndex = function (data, index) {
 SinglyLinkedList.prototype.removeItem = function(value) {
     var currentNode = this.HEAD;
     if(!currentNode) {
-        message.failure = "Your list is empty";
-        message.failure = -1
-        return message;
+        return returnEmptyListObj();
     }
     //Removing a HEAD node.
     if(currentNode.data == value) {
@@ -123,9 +120,7 @@ SinglyLinkedList.prototype.removeItem = function(value) {
 SinglyLinkedList.prototype.removeItemFromListAtIndex = function(index) {
     var currentNode = this.HEAD;
     if(!currentNode) {
-        message.failure = "Your list is empty";
-        message.failure = -1
-        return message;
+        return returnEmptyListObj();
     }
     //Removing a HEAD node.
     if (index == 0) {
@@ -194,6 +189,78 @@ SinglyLinkedList.prototype.ReverseNode = function(currentNode) {
     temp.next = currentNode;
     currentNode.next = null;
 }
+
+SinglyLinkedList.prototype.middleOfTheList1 = function() {
+    var mid = 0;
+    if (!this.HEAD) {
+        return returnEmptyListObj();
+    }
+
+    var currentNode = this.HEAD;
+    var length = 0;
+    while(currentNode) {
+        length++;
+        currentNode = currentNode.next;
+    }
+    var index = 0;
+    currentNode = this.HEAD;
+    length = parseInt(length/2);
+    while(index != length) {
+        currentNode = currentNode.next;
+        index++;
+    }
+    message.success = "Middle of the list is: " + currentNode.data;
+    message.code = 0;
+    message.failure = null;
+    return message;
+}
+
+/**
+ * Algorithm:
+ * Hopping the list using two pointers.
+ * Initialize two variable one say *FastPointer* and second say *SlowPointer*
+ * On each itiration, advance *FastPointer* by two nodes and *SlowPointer* by one node.
+ * Once end of the list is reached. *SlowPointer* will be the middle of the list.
+ */
+SinglyLinkedList.prototype.middleOfTheList2 = function() {
+    var currentNode = this.HEAD;
+    var slowPointer = currentNode;
+    var fastPointer = currentNode;
+    if(!currentNode) {
+        return returnEmptyListObj();
+    }
+    while (fastPointer && fastPointer.next) {
+        slowPointer = slowPointer.next;
+        fastPointer = fastPointer.next.next;
+    }
+    message.success = "Middle of the list is: " + slowPointer.data;
+    message.failure = null, message.code = 0;
+    return message;
+}
+/**
+ * Initialize a counter at zero.
+ * Traverse each node until the end of the list.
+ * Increment the counter at each step and while counter is odd, increment the mid pointer.
+ * At the end of the list mid will be the mid pointer.
+ */
+SinglyLinkedList.prototype.middleOfTheList3 = function() {
+    var currentNode = this.HEAD;
+    if(!currentNode) {
+        return returnEmptyListObj();
+    }
+    var counter = 0;
+    var midNode = currentNode;
+    while(currentNode) {
+        if(counter % 2  == 1) {
+            midNode = midNode.next;
+        }
+        currentNode = currentNode.next;
+        counter++;
+    }
+    message.success = "Middle of the list is: " + midNode.data;
+    message.failure = null, message.code = 0;
+    return message;
+}
 /**
  * To print the complete list.
  * In our case, simply return a array of items to the caller.
@@ -205,10 +272,7 @@ SinglyLinkedList.prototype.ReverseNode = function(currentNode) {
 SinglyLinkedList.prototype.printList = function() {
     var currentNode = this.HEAD;
     if(!currentNode) {
-        message.failure = "Your List is empty";
-        message.code = -1;
-        message.success = null;
-        return message;
+        return returnEmptyListObj();
     }
     message.result = [];
     while(currentNode) {
@@ -217,4 +281,14 @@ SinglyLinkedList.prototype.printList = function() {
     }
     message.code = 0;
     return message
+}
+
+/**
+ * Small Util to return a Empty List object.
+ */
+function returnEmptyListObj() {
+    message.failure = "Your List is Empty";
+    message.code = -1;
+    message.success = null;
+    return message;
 }

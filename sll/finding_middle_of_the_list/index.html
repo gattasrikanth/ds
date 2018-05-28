@@ -1,0 +1,58 @@
+<head>
+    <script src="../lib/SinglyLinkedList.js"></script>
+    <script src="../lib/Until.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+    </head>
+    <h3>Singly Linked List</h3>
+    <br>
+    <button onclick="resetList()">Reset List</button><h4>Here is your list items:</h4>
+    <div id='showList'></div>
+    <br><h4>List Actions:</h4>
+Create a list of <input type="text" id="count"></input> random integers.<button onclick="createList()">Create</button>
+<br>
+<br>
+Get Middle of the Linked List (Solution#1) <button onclick="middleOfTheList1()">Middle Of The List</button>
+<br>
+Get Middle of the Linked List (Solution#2) <button onclick="middleOfTheList2()">Middle Of The List</button>
+<br>
+Get Middle of the Linked List (Solution#3) <button onclick="middleOfTheList3()">Middle Of The List</button>
+<div class='footer' id='console'></div>
+<script>
+var list = null;
+var logLines = 0;
+
+var footer = document.getElementById('console');
+var showList = document.getElementById('showList');
+log('Your List is created.');
+
+function createList () {
+    list = new SinglyLinkedList();
+    var count = Id("count").value;
+    for (var i = 0; i < count; i++) {
+        list.addItem(Math.floor(Math.random() * 100));
+    }
+    log("Your list created.")
+    printList();
+}
+
+function resetList() {
+    list = null;
+    printList();
+}
+
+function middleOfTheList1() {
+    var result = list.middleOfTheList1();
+    log(result);
+}
+function middleOfTheList2() {
+    var result = list.middleOfTheList2();
+    log(result);
+}
+function middleOfTheList3() {
+    var result = list.middleOfTheList3();
+    log(result);
+}
+
+
+
+</script>
