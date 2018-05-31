@@ -15,6 +15,8 @@ Create a list of
     </select>
 <button onclick="initList()">Create</button>
 <br>
+Create a list of <input type="text" id="count" value=7></input> random integers.<button onclick="createList()">Create</button>
+<br>
 Add Item to your list: <input type="text" id="addItem"></input><button onclick="addItemToList()">Add</button>
 <br>
 Add Item to your list: At Index: <input type="number" id="addItemIndex" value=0>
@@ -28,6 +30,8 @@ Remove Item from your list (By Value): <input type="text" id="removeItem"></inpu
 Print Reverse of the list (Recursively #logic1):<button onclick="reverseList1()">Reverse My List</button>
 <br>
 Print Reverse of the list (Recursively #logic2):<button onclick="reverseList2()">Reverse My List</button>
+<br>
+Reverst the list in Groups of K: <input type="number" id="groupSize" value=2><button onclick="reverseGroups()">Reverse List In Groups</button>
 <div class='footer' id='console'></div>
 
 
@@ -42,6 +46,17 @@ function initList() {
     list = new SinglyLinkedList(listType);
     log('Your List is created.')
 }
+
+function createList () {
+    list = new SinglyLinkedList();
+    var count = Id("count").value;
+    for (var i = 0; i < count; i++) {
+        list.addItem(Math.floor(Math.random() * 100));
+    }
+    log("Your list created.")
+    printList();
+}
+
 printList();
 function resetList() {
     list = null;
@@ -115,4 +130,13 @@ function reverseList2() {
     printList();
 }
 
+function reverseGroups() {
+    var k = parseInt(Id("groupSize").value);
+    if(k < 1) {
+        log("Minimim Group Size should be > 1")
+        return;
+    }
+    list.reverseGroups(k);
+    printList();
+}
 </script>

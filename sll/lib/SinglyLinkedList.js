@@ -190,6 +190,33 @@ SinglyLinkedList.prototype.ReverseNode = function(currentNode) {
     currentNode.next = null;
 }
 
+SinglyLinkedList.prototype.reverseGroups = function(k) {
+    var currentNode = this.HEAD;
+    if(!currentNode) {
+        return returnEmptyListObj();
+    }
+    this.HEAD = reverseInGroupsOfK(currentNode, k);
+}
+
+function reverseInGroupsOfK(currentNode, k) {
+    var startNode = currentNode;
+    var previousNode = null;
+    var counter = 1;
+    var nextNode = null;
+
+    while(counter <= k && currentNode) {
+        nextNode = currentNode.next;
+        currentNode.next = previousNode;
+        previousNode = currentNode;
+        currentNode = nextNode;
+        counter++;
+    }
+    if(currentNode) {
+        startNode.next = reverseInGroupsOfK(currentNode, k);
+    }
+    return previousNode;
+}
+
 SinglyLinkedList.prototype.middleOfTheList1 = function() {
     var mid = 0;
     if (!this.HEAD) {
