@@ -1,0 +1,105 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/lib/css/styles.css"></link>
+    <script src="./lib/BinarySearchTree.js"></script>
+    <script src="/lib/js/util.js"></script>
+</head>
+
+<title>Trees</title>
+
+<body>
+    <h3>Binary Search Tree</h3>
+    <div id='showList'></div>
+
+    <br>
+    <h4>Tree Actions:</h4>
+    <button onclick="resetList()">Reset List</button><br>
+
+    Create a tree of
+    <select id="listType">
+        <option>Integers</option>
+        <option>Strings</option>
+    </select>
+    <button onclick="initTree()">Create</button>
+    <br> Create a Tree of
+    <input type="text" id="count" value=7></input> random integers.
+    <button onclick="createTree()">Create</button>
+    <br> Add Item to your Tree:
+    <input type="text" id="addItem"></input>
+    <button onclick="addItemToTree()">Add</button>
+    <br> Remove Item from your list (By Value):
+    <input type="text" id="removeItem"></input>
+    <button onclick="removeItemFromList()">Remove</button>
+    <br> PreOrder Traversal
+    <button onclick="printPreOrderTraversal()">Pre-OrderTraversal</button>
+    <br> InOrder Traversal
+    <button onclick="printInOrderTraversal()">In-OrderTraversal</button>
+    <br> PostOrder Traversal
+    <button onclick="printPostOrderTraversal()">Post-OrderTraversal</button>
+
+    <div class='footer' id='console'></div>
+
+    <script>
+        var tree = null;
+        var logLines = 0;
+        var footer = document.getElementById('console');
+        var showList = document.getElementById('showList');
+
+        function initTree() {
+            tree = new BinarySearchTree();
+            log('Your Tree is created.')
+        }
+
+        function resetList() {
+            tree = null;
+            printPreOrderTraversal(tree);
+        }
+
+        function createTree() {
+            tree = new BinarySearchTree();
+            tree.addItemToTree(50);
+            var count = Id("count").value;
+            for (var i = 0; i < count; i++) {
+                var randomInt = Math.floor(Math.random() * 100);
+                console.log(randomInt)
+                tree.addItemToTree(randomInt);
+            }
+            log("Your Tree created.")
+            console.log(tree);
+        }
+
+        function printPreOrderTraversal() {
+            if (!tree) {
+                showList.innerHTML = "Your Tree is EMPTY"
+                return;
+            }
+            printTree(tree.preOrderTraversal());            
+        }
+        function printInOrderTraversal() {
+            if (!tree) {
+                showList.innerHTML = "Your Tree is EMPTY"
+                return;
+            }
+            printTree(tree.inOrderTraversal());            
+        }
+        function printPostOrderTraversal() {
+            if (!tree) {
+                showList.innerHTML = "Your Tree is EMPTY"
+                return;
+            }
+            printTree(tree.postOrderTraversal());            
+        }
+        function printTree(result) {
+            var output = '[';
+            if (result.code == 0) {
+                var length = result.result.length
+                for (var i = 0; i < length; i++) {
+                    output += "'" + result.result[i] + "'";
+                    if (i + 1 != length)
+                        output += ", "
+                }
+            }
+            output +=  ']';
+            showList.innerHTML += output + "<br>";
+        }
+    </script>
+</body>
