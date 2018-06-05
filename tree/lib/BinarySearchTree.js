@@ -122,6 +122,33 @@ function postOrderTraversal(root) {
     treeArray.push(root.data);
     return treeArray;
 }
+
+BinarySearchTree.prototype.searchTree = function(data) {
+    var root = this.ROOT;
+    if(!root) {
+        returnEmptyTreeObj();
+    }
+    return searchBinaryTree(root, data);
+}
+
+function searchBinaryTree(root, data) {
+    if(!root) {
+        message.failure = "Element Not found";
+        message.code = -1;
+        return message;
+    }
+    if(root.data == data) {
+        message.code = 0;
+        message.success = "Element Found."
+        return message;
+    }
+    if(data <= root.data) {
+        return searchBinaryTree(root.left, data);
+    }
+    if(data > root.data) {
+        return searchBinaryTree(root.right, data);
+    }
+}
 /**
  * Small Util to return a Empty List object.
  */

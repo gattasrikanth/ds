@@ -35,6 +35,9 @@
     <button onclick="printInOrderTraversal()">In-OrderTraversal</button>
     <br> PostOrder Traversal
     <button onclick="printPostOrderTraversal()">Post-OrderTraversal</button>
+    <br>
+    Search for value <input type="text" id="search" value=22></input> in the tree
+    <button onclick="searchTree()">Search</button>
 
     <div class='footer' id='console'></div>
 
@@ -87,6 +90,21 @@
                 return;
             }
             printTree(tree.postOrderTraversal());            
+        }
+
+        function searchTree() {
+            if (!tree) {
+                showList.innerHTML = "Your Tree is EMPTY"
+                return;
+            }
+            var data = parseInt(Id('search').value);
+            var result = tree.searchTree(data);
+            if(result.code ==0) {
+                alert(result.success)
+            } else {
+                alert(result.failure);
+            }
+            
         }
         function printTree(result) {
             var output = '[';
