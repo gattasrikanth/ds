@@ -1,0 +1,45 @@
+<title>Find if an array of strings can be chained to form a circle</title>
+<body>
+    <script>
+
+function init() {
+    var input = document.getElementById("inputString").value;
+    if(input) {
+        findIsChainPossible(input);
+    }
+}
+
+function findIsChainPossible(input) {
+    input = input.toLowerCase();
+    var inputArray = input.split(",");
+    var length = inputArray.length;
+    var charArray = new Array();
+    for (var i = 0; i < length; i++) {
+        var head = inputArray[i].charAt(0);
+        var tail = inputArray[i].charAt(inputArray[i].length-1);
+        charArray[head] = tail;
+    }
+
+    var char = input[0];
+    var loop = 0;
+    var keys = Object.keys(charArray);
+    while(loop < keys.length) {
+        if(typeof charArray[char] !== 'undefined') {
+            var temp = charArray[char];
+            delete charArray[char];
+            char = temp;            
+        } else {
+            alert('Not a chain!');
+            return;
+        }
+        loop++;
+    }
+    alert("Chain found");
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Find if an array of strings can be chained to form a circle</h3>
+    <input type='text' id='inputString' value='Google,Evenings,Swag'></input>
+    <button onclick="init()">Find</button>
+</body>

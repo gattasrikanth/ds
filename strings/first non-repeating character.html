@@ -1,0 +1,40 @@
+<title>Given a string, find its first non-repeating character</title>
+<body>
+    <script>
+
+function init() {
+    var input = document.getElementById("inputString").value;
+    if(input) {
+        firstNonRepeatingCharacter(input);
+    }
+}
+
+function firstNonRepeatingCharacter(input) {
+    var length = input.length;
+
+    var charArray = new Array();
+    for(var i = 0; i < length; i++) {
+        var char = input[i];
+        if(typeof charArray[char] !== 'undefined') {
+            charArray[char]++;
+        } else {
+            charArray[char] = 1;
+        }
+    }
+    for (key of Object.keys(charArray)) {
+        if(charArray[key] == 1) {
+            var output = 'First non-repeating character is: ' + key;
+            console.log(output);
+            alert(output);
+            return;
+        }
+    }
+    alert('No such character')
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Given a string, find its first non-repeating character</h3>
+    <input type='text' id='inputString' value='Google'></input>
+    <button onclick="init()">Find</button>
+</body>

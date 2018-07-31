@@ -1,0 +1,34 @@
+<script>
+
+function removeDuplicatesHelper() {
+    var input = document.getElementById("removeDuplicates").value;
+    if(input) {
+        removeDuplicates(input);
+    }
+}
+
+function removeDuplicates(input) {
+    var counter = new Array();
+    var max = -1, maxChar='';
+    var length = input.length;
+    
+    for (var i = 0; i < length; i++) {
+        var char = input[i];
+        if(counter[char]) {
+            counter[char]++;
+        } else {
+            counter[char] = 1;
+        }
+    }
+    var output = new Array();
+    for(j in counter) {
+        output.push(j);
+    }
+    console.log('String after deleting duplicates are  ["' + output.toString() +'"]');
+}
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='removeDuplicates' value='Google Is Awesome'></input>
+    <button onclick="removeDuplicatesHelper()">Remove Duplicates</button>
+</body>

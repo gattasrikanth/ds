@@ -1,0 +1,133 @@
+<script>
+
+/**
+ * Returns the index of the first occurence of given string in the phrase
+ * In case of no match, returns -1
+ * 
+ * @param text string to be searched 
+ * @param pattern string to be found in the text
+ */
+function boyerMooreSearch(text, pattern) {
+    
+    // Handle edge case
+    if (pattern.length === 0) {
+        return -1;
+    }
+
+    // Pre process patterns and create a badmatch Table.
+    var badMatchTable = new Array();
+    badMatchTable = getBadMatchTable(pattern);
+    console.log(badMatchTable);
+    var textLen = text.length;
+    var patLen = pattern.length;
+    //i to track text length;
+    //j to track pattern length;
+    var hop;
+    for (var i = 0; i <= (textLen - patLen); i += hop) {
+        hop = 0;
+
+        for(var j = patLen -1; j > -1; j--) {
+            var p = pattern[j];
+            var t = text[i+j];
+            if(pattern[j] != text[i+j]) {
+                hop = badMatchTable[text[i+j]]? badMatchTable[text[i+j]] : patLen;
+                break;
+            }
+            if(j == 0) {
+                console.log("Found a match");
+                i = i+1;
+            }
+        }
+        if(hop == 0) {
+            console.log('Match found at ' + i);
+            //return;
+        }
+    }
+    console.log('None')
+    return -1;
+}
+
+function getBadMatchTable(pattern) {
+    var lookUpArray = new Array();
+    var length = pattern.length;
+    for (var i = 0; i < length; i++) {
+        var char = pattern[i];
+        lookUpArray[char] = Math.max(1, length - i - 1);
+    }
+    return lookUpArray;
+}
+/**
+ * Creates jump table, based on mismatched character information
+ */
+function makeCharTable(pattern) {
+    let table = [];
+
+    // 65536 being the max value of char + 1
+    for (let i = 0; i < 65536; i++) {
+        table.push(pattern.length);
+    }
+
+    for (let i = 0; i < pattern.length - 1; i++) {
+        const charCode = pattern.charCodeAt(i);
+        table[charCode] = pattern.length - 1 - i;
+    }
+
+    return table;
+}
+
+
+function makeOffsetTable(pattern) {
+    let table = [];
+    table.length = pattern.length;
+
+    let lastPrefixPosition = pattern.length;
+
+    for (let i = pattern.length; i > 0; i--) {
+        if (isPrefix(pattern, i)) {
+            lastPrefixPosition = i;
+        }
+
+        table[pattern.length - i] = lastPrefixPosition - 1 + pattern.length;
+    }
+
+    for (let i = 0; i < pattern.length - 1; i++) {
+        const slen = suffixLength(pattern, i);
+        table[slen] = pattern.length - 1 - i + slen;
+    }
+
+    return table;
+}
+
+function isPrefix(pattern, p) {
+    for (let i = p, j = 0; i < pattern.length; i++, j++) {
+        if (pattern[i] != pattern[j]) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+function suffixLength(pattern, p) {
+    let len = 0;
+
+    for (let i = p, j = pattern.length - 1; i >= 0 && pattern[i] == pattern[j]; i--, j--) {
+        len += 1;
+    }
+
+    return len;
+}
+
+function boyerMooreSearchHelper() {
+    var input = document.getElementById("substring").value;
+    if(input) {
+        boyerMooreSearch(input, 'om');
+    }
+}
+
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='substring' value='Google Is Awesome'></input>
+    <button onclick="boyerMooreSearchHelper()">Find substring</button>
+</body>

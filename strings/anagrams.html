@@ -1,0 +1,57 @@
+<title>Check whether two strings are anagram of each other</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = document.getElementById("inputString1").value;
+    var input2 = document.getElementById("inputString2").value;
+    if(input1 && input2) {
+        isAnagram(input1, input2);
+    }
+}
+
+function isAnagram(input1, input2) {
+    var l1 = input1.length;
+    var l2 = input2.length;
+    var isAnagram = true;
+    //Strings are NOT anagrams if their lengths are not equal:
+    if (l1 != l2) {
+        alert(false);
+        return;
+    }
+
+    var charArray = new Array();
+
+    for (var i = 0; i < l1; i++) {
+        var input1Char = input1[i];
+        if(typeof charArray[input1Char] !== 'undefined') {
+            charArray[input1Char]++;
+        } else {
+            charArray[input1Char] = 1;
+        }
+    }
+    for (var i = 0; i < l2; i++) {
+        var input2Char = input2[i];
+        if(typeof charArray[input2Char] !== 'undefined') {
+            charArray[input2Char]--;
+        } else {
+            charArray[input2Char] = 1;
+        }
+    }
+
+    Object.values(charArray).forEach(element => {
+        if(element != 0) {
+            isAnagram = false;
+        }
+    });
+    alert(isAnagram);
+    return;
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Check whether two strings are anagram of each other</h3>
+    <input type='text' id='inputString1' value='Google'></input>
+    <input type='text' id='inputString2' value='Gglooe'></input>
+    <button onclick="init()">Anagrams?</button>
+</body>

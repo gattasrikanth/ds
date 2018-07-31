@@ -1,0 +1,55 @@
+<script>
+
+function reverseWords() {
+    var input = document.getElementById("reverse").value;
+    if(input) {
+        reverse(input);
+    }
+}
+
+function reverse(input) {
+    //Create a new array with the given string.
+    // and fill the char array.
+    var charArray = new Array();
+    var input_length = input.length;
+
+    /*for(var i = 0; i < input_length; i++) {
+        charArray.push(input[i]);
+    }*/
+    //Get a reverse of fullstring first:
+    for(var i = input_length-1; i > -1; i--) {
+        charArray.push(input[i]);
+    }
+
+    //OR For simplicity: Split using the built in method.
+    //var charArray = input.split();
+
+    var start = 0, end = 0;
+
+    for(var j = 0; j < input_length; j++) {
+        if(j+1 == input_length || charArray[j+1] == ' ') {
+            end = j;
+            reverseSubArray(charArray, start, end);
+            j = j+1;
+            start = j+1; end = j+1;
+        }
+    }
+    console.log(charArray)    
+}
+
+function reverseSubArray(charArray, start, end) {
+    while (start < end) {
+        var temp = charArray[start];
+        charArray[start] = charArray[end];
+        charArray[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='reverse' value='Cake Pound Steal'></input>
+    <button onclick="reverseWords()">Reverse Words</button>
+</body>

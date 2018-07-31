@@ -1,0 +1,52 @@
+<title>Recursive Product</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = parseInt(document.getElementById("inputString1").value);
+    var input2 = parseInt(document.getElementById("inputString2").value);
+    if(input1 && input2) {
+        product(input1, input2);
+    }
+}
+
+function product(a, b) {
+    var smaller = (a < b) ? a : b;
+    var bigger = (a < b) ? b : a;
+    var final_product = calProduct(smaller, bigger);
+    //alert(final_product);
+    console.log(final_product);
+    console.assert(final_product == a*b, "Product is incorrect.");
+    generateTwoRandomIntegers();
+}
+
+function generateTwoRandomIntegers() {
+    var a = Math.floor(Math.random() * 1000);
+    var b = Math.floor(Math.random() * 2000);
+
+    document.getElementById("inputString1").value = a;
+    document.getElementById("inputString2").value = b;
+}
+
+function calProduct(smaller, bigger) {
+    if (smaller == 0)
+        return 0;
+    if (smaller == 1)
+        return bigger;
+    
+    var s = smaller >> 1; // Divide by 2
+    var halfProduct = calProduct(s, bigger);
+
+    if(smaller % 2 == 0) {
+        return halfProduct + halfProduct;
+    } else return halfProduct + halfProduct + bigger;
+}
+
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Multuple two positive integeres without using '*' operator</h3>
+    <input type='text' id='inputString1' value='45'></input>
+    <input type='text' id='inputString2' value='23'></input>
+    <button onclick="init()">Product</button>
+</body>

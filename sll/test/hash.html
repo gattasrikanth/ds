@@ -1,0 +1,87 @@
+<head>
+    <script>
+    // This object is checked on the main app to know when to inject (or not).
+//    window.__gCrWeb = null;
+//var __gCrWeb = {};
+
+// Store __gCrWeb global namespace object referenced by a string, so it does not
+// get renamed by closure compiler during the minification.
+//window['__gCrWeb'] = __gCrWeb;
+//alert(__gCrWeb.windowId);
+    window.__gCrWeb.common.isSameOrigin = function(a, c) { 
+        return true;
+    }
+    window.__gCrWeb['dispatchHashchangeEvent'] = function(oldURL, newURL) {
+        alert(oldURL)
+  var hashchangeEvent = window.document.createEvent('HTMLEvents');
+  hashchangeEvent.initEvent('hashchange', true, false);
+  if (oldURL) hashchangeEvent.oldURL = oldURL;
+  if (newURL) hashchangeEvent.newURL = newURL;
+
+  // setTimeout() is used in order to return immediately. Otherwise the
+  // dispatchEvent call waits for all event handlers to return, which could
+  // cause a ReentryGuard failure.
+  window.setTimeout(function() {
+    window.dispatchEvent(hashchangeEvent);
+  }, 0);
+};
+
+(function() {
+
+/**
+ * Handles document load completion tasks. Invoked from
+ * [WKNavigationDelegate webView:didFinishNavigation:], when document load is
+ * complete.
+ * TODO(crbug.com/546350): Investigate using
+ * WKUserScriptInjectionTimeAtDocumentEnd to inject this material at the
+ * appropriate time so that this API will not be needed.
+ */
+__gCrWeb.didFinishNavigation = function() {
+  // Send the favicons to the browser.
+  alert(123)
+  __gCrWeb.message.invokeOnHost({
+    'command': 'document.favicons',
+    'favicons': __gCrWeb.common.getFavicons()
+  });
+};
+__gCrWeb['dispatchHashchangeEvent'] = function(oldURL, newURL) {
+    alert(1234)
+  var hashchangeEvent = window.document.createEvent('HTMLEvents');
+  hashchangeEvent.initEvent('hashchange', true, false);
+  if (oldURL) hashchangeEvent.oldURL = oldURL;
+  if (newURL) hashchangeEvent.newURL = newURL;
+
+  // setTimeout() is used in order to return immediately. Otherwise the
+  // dispatchEvent call waits for all event handlers to return, which could
+  // cause a ReentryGuard failure.
+  window.setTimeout(function() {
+    window.dispatchEvent(hashchangeEvent);
+  }, 0);
+};
+
+}());
+</script>
+
+<!--<iframe src="http://rsolomakhin.github.io/autofill/"></iframe>-->
+<!--<form action="/action_page.php" method="get" autocomplete="on">
+    UserName<br><input type="text" name="password"><br>
+    Password<br><input type="password" name="password"><br
+    ><br>
+    <input type="submit" value="Submit">
+  </form> 
+-->
+<script>
+    //window.__gCrWeb.dispatchHashchangeEvent();
+    setTimeout(function(){
+        location.hash = "xyz";
+        //alert(window.__gCrWeb.windowId);
+        //window.dispatchEvent(new HashChangeEvent("hashchange"))
+    }, 3000)
+</script>
+  <h3>Name/Password</h3>
+
+  <form name="np" id="np1" action="https://example.com/" method="post">
+  Name: <input type="text" name="name" id="password_name"><br>
+  Password: <input type="password" name="password" id="password_field"><br>
+  <input type="submit" value="Submit" id="password_submit">
+  </form>

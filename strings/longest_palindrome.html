@@ -1,0 +1,33 @@
+<body>
+    <script>
+
+function init() {
+    var input = document.getElementById("inputString").value;
+    if(input) {
+        getLongetsPalindrome(input);
+    }
+}
+
+function getLongetsPalindrome(input) {
+    var length = input.length;
+    var result = 0
+    var max = -1;
+
+    for (var count = 0; count <= 2*length-1; count++) {
+        var left = parseInt(count/2);
+        var right = left + count%2;
+        while (left >= 0 && right < length && input.charAt(left) == input.charAt(right)) {
+            if (left!= right)
+                result++;
+            left--;
+            right++;
+        }
+    }
+    console.log(result);
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <input type='text' id='inputString' value='Cake Pound Steal'></input>
+    <button onclick="init()">Longest Palindrome</button>
+</body>

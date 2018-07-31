@@ -1,0 +1,45 @@
+<title>Count the number of possible triangles</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            array = document.getElementById("inputArray").value.split(',');
+            for (var x = 0; x < array.length; x++)
+               array[x] = parseInt(array[x]);
+            if (array) {
+                countTriangles(array);
+            }
+        }
+
+        function countTriangles(array) {
+            var len = array.length;
+            var count = 0;
+             for (var c = len - 1; c > 0; c--) {
+                 var a = 0;
+                 var b = c-1;
+                 while(array[a] + array[b] < array[c]) {
+                     b--;
+                 }
+                 count += b-a;
+             }
+             console.log(count);
+        }
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Count the number of possible triangles</h3>
+    Input Array:
+    <input type='text' id='inputArray' value='4,5,7,8,,9,10,12,13,15,90'></input> 
+    <br>
+    <button onclick="init()">Count Triangles</button>
+</body>

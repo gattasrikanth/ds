@@ -1,0 +1,49 @@
+<title>Find Excel column name from a given column number</title>
+<body>
+    <script>
+
+function init() {
+    var array = document.getElementById("inputArray").value.split(',');
+    var d = parseInt(document.getElementById("inputD").value);
+    if(array && d) {
+        rotateArray(array, d);
+    }
+}
+
+function GCD(a, b) {
+    if (b == 0)
+        return a;
+    else return GCD(b, a%b);
+}
+
+function rotateArray(array, d) {
+    console.log(array);
+    var length = array.length;
+    var gcd = GCD(length, d);
+    var start, end, temp;
+    for (var i = 0; i < gcd; i++) {
+        start = i;
+        temp = array[i];
+        while(true) {
+            end = (start + d);
+            if (end >= length)
+              end = end - length;
+              if(end == i) {
+                break;
+            }
+            array[start] = array[end];
+            start = end;
+        }
+        array[start] = temp;
+    }
+    console.log(array);
+}
+
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Algorithm to rotate array of size 'n' by 'd' elements</h3>
+    Input Array: <input type='text' id='inputArray' value='1,2,3,4,5,6,7,8,9,10'></input><br>
+    Rotate By 'd':<input type='number' id='inputD' value='2'></input><br>
+    <button onclick="init()">Find Column Name</button>
+</body>

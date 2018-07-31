@@ -1,0 +1,73 @@
+<title>Sliding Window Maximum (Maximum of all subarrays of size k)</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            array = document.getElementById("inputArray").value.split(',');
+            var k = parseInt(document.getElementById("inputK").value);
+            for (var x = 0; x < array.length; x++)
+               array[x] = parseInt(array[x]);
+            if (array && k) {
+                getMaximumOfSubArrays(array, k);
+            }
+        }
+
+        function getMaximumOfSubArrays(array, k) {
+            console.log(array);
+            queue = new Array(k);
+            queue[0] = array[0];
+            for (var i = 1; i < k; i++) {
+                if (array[i] < queue[qStart]) {
+                    pushAtEnd(i);
+                }
+                if (array[i] > queue[qStart]) {
+                    qStart = 0;
+                    qEnd = 0;
+                    queue[qStart] = array[i];
+                }
+            }
+            //console.log(queue[0]);
+            result.push(queue[0]);
+
+            for (; i < array.length; i++) {
+                if (array[i] < queue[qStart]) {
+                    pushAtEnd(i);
+                }
+                if (array[i] > queue[qStart]) {
+                    qStart = 0;
+                    qEnd = 0;
+                    queue[qStart] = array[i];
+                }
+                result.push(queue[0]);
+                console.log(queue);
+            }
+            console.log(result);
+        }
+
+        function pushAtEnd(i) {
+            while (qEnd > qStart && queue[qEnd] < array[i]) {
+                qEnd--;
+            }
+            qEnd++;
+            queue[qEnd] = array[i];
+        }
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Sliding Window Maximum (Maximum of all subarrays of size k)</h3>
+    Input Array:
+    <input type='text' id='inputArray' value='8,5,10,7,9,4,15,12,90,13'></input>
+    <br> 'k':
+    <input type='number' id='inputK' value='4'></input>
+    <br>
+    <button onclick="init()">Print Max of SubArrays</button>
+</body>

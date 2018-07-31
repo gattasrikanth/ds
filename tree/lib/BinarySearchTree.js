@@ -149,6 +149,102 @@ function searchBinaryTree(root, data) {
         return searchBinaryTree(root.right, data);
     }
 }
+
+BinarySearchTree.prototype.deleteNodeFromTree = function(data) {
+    var root = this.ROOT;
+    if(!root) {
+        returnEmptyTreeObj();
+    }
+    //Search for the node tobe delete first.
+    var deleteNode = null; var parentNode = root;
+    var currentNode = root;
+    while(data != currentNode.data) {
+       /* if(data == currentNode.data) {
+            break;
+        }*/
+        parentNode = currentNode;
+        if(data < currentNode.data) {
+            currentNode = currentNode.left;
+        } else {
+            currentNode = currentNode.right;
+        }
+    }
+
+    console.log(parentNode);
+    console.log(currentNode);
+    //Case1:
+    //If the node is a leaf Node.
+    if(!currentNode.left && !currentNode.right) {
+        if(parentNode.left == currentNode) {
+            parentNode.left = null;
+        } else if(parentNode.right == currentNode) {
+            parentNode.right = null;
+        }
+        currentNode = null;
+        return
+    }
+
+    //Case2:
+    //If the node has only One child.
+    if(!currentNode.left && currentNode.right){
+        if(parentNode.left == currentNode) {
+            parentNode.left = currentNode.right;
+        } else if(parentNode.right == currentNode) {
+            parentNode.right = currentNode.right;
+        }
+        currentNode = null;
+        return;      
+    }
+    if (currentNode.left && !currentNode.right) {
+        if(parentNode.left == currentNode) {
+            parentNode.left = currentNode.right;
+        } else if(parentNode.right == currentNode) {
+            parentNode.right = currentNode.right;
+        }
+        currentNode = null;       
+        return; 
+    }
+
+    //Case3:
+    //If the node has two childern.
+    //Find the in-order-successer and replace the node data with inorder successer data.
+    var replaceNode = inOrderSuccessor(this.ROOT, currentNode);
+    currentNode.data = replaceNode.data;
+    replaceNode = null;
+    console.log(parentNode)
+    console.log(currentNode);
+}
+
+function inOrderSuccessor(root, node) {
+    //var root = this.ROOT;
+    var inOrderSuccessor = null;
+    var nodeParent = null;
+    if(!root.right) {
+        while(root.data != node.data) {
+            if(node.data < root.data) {
+                root = root.left;
+            } else {
+                nodeParent = root;
+                root = root.right;
+                inOrderSuccessor = root;
+            }
+        }
+    } else {
+        nodeParent = root;
+        root = root.right;
+        while(root.left) {
+            nodeParent = root;
+            root = root.left;
+        }
+        inOrderSuccessor = root;
+    }
+    if(nodeParent.left == inOrderSuccessor)
+        nodeParent.left = null;
+    if(nodeParent.right == inOrderSuccessor)
+        nodeParent.right - null;
+    return inOrderSuccessor;
+} 
+
 /**
  * Small Util to return a Empty List object.
  */

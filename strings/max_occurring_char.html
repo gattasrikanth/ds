@@ -1,0 +1,35 @@
+<script>
+
+function maxChar() {
+    var input = document.getElementById("maxChar").value;
+    if(input) {
+        max_Occurring_Char(input);
+    }
+}
+
+function max_Occurring_Char(input) {
+    var counter = new Array();
+    var max = -1, maxChar='';
+    var length = input.length;
+    
+    for (var i = 0; i < length; i++) {
+        var char = input[i];
+        if(counter[char]) {
+            counter[char]++;
+        } else {
+            counter[char] = 1;
+        }
+        if(counter[char] && counter[char] > max) {
+            max = counter[char];
+            maxChar=char;
+        }
+    }
+    console.log('Max Occurring Char is ["' + maxChar +'"]');
+    console.log('Occurred ["' + max + '"] times.')
+}
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='maxChar' value='Google Is Awesome'></input>
+    <button onclick="maxChar()">Get Max Char</button>
+</body>

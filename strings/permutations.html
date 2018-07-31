@@ -1,0 +1,44 @@
+<script>
+    var count = 0;
+    function permutations (inputstring) { 
+    count = 0;
+    var used = new Array();
+    var length = inputstring.length;
+    
+    for(var i = 0; i < length; i++) {
+        used[i] = false;
+    }
+    var output = new Array();
+    permute(inputstring, output, length, used, 0);
+    console.log(count)
+}
+
+function permute(input, output, length, used, position) {
+    //Base case:
+    if(position == length) {
+        count++;
+        console.log(output.toString());
+        return;
+    }
+    for (var j = 0; j < length; j++) {
+        if(used[j])
+            continue;
+        output[position] = input[j];
+        used[j] = true;
+        permute(input, output, length, used, position+1)
+        used[j] = false;
+    }
+}
+
+function printPermutations() {
+    var input = document.getElementById("permute").value;
+    if(input) {
+        permutations(input);
+    }
+}
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='permute' value='abcdefghijkl'></input>
+    <button onclick="printPermutations()">Permute</button>
+</body>

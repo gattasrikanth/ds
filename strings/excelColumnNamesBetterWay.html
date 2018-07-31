@@ -1,0 +1,44 @@
+<title>Find Excel column name from a given column number</title>
+<body>
+    <script>
+
+function init() {
+    var input = document.getElementById("inputString").value;
+    if(input) {
+        //findColumnName(parseInt(input));
+    }
+    for (var i = 18000; i < 18280; i++) {
+        findColumnName(parseInt(i));
+    }
+}
+
+var charArray = new Array();
+
+function findColumnName(input) {
+    var originalInput = input;
+    input = input -1;
+    for (var i = 0; i < 26; i++) {
+        charArray[i] = String.fromCharCode(65 + i);
+    }
+    if(input < 26) {
+        //alert("Column name is " + charArray[input]);
+        console.log("Column name is " + charArray[input]);
+        return;
+    }
+    var columnName = '';
+    columnName = charArray[input%26];
+    input = parseInt(input / 26);
+    while(input > 0) {
+        columnName = charArray[(input-1)%26] + columnName;
+        input = parseInt((input-1)/26);
+    }
+    //alert(columnName);
+    console.log(originalInput, columnName)
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Find Excel column name from a given column number</h3>
+    <input type='number' id='inputString' value='705'></input>
+    <button onclick="init()">Find Column Name</button>
+</body>

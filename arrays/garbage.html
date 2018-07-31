@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Garbage URL Generator</title>
+</head>
+<body><br>
+  Site URL: <input id='url' value="https://www.google.com" size='50'></input><br>
+  Generate URL length: <input id='size' type='number' value='915'></input><br>
+  <button onclick='generate()'>Generate</button><br><br>
+
+<h3><a href='' id='link' target="_blank">Click Here</a> after your Generate a URL</h3>
+<hr>
+<h4>Lenght of URL: <span id='sizeURL'></span></h4>
+<h4>Length of Garbage Text: <span id='sizeGarbage'></span></h4>
+<h4>Length of Generated URL: <span id='sizeFullURL'></span></h4>
+
+<script>
+  function generate() {
+    var url = ele('url').value;
+    var size = parseInt(ele('size').value);
+    if(url.indexOf('http') == -1)
+      url = 'https://www.' + url;
+    var garbage = '/#';
+    size = size - (url.length + garbage.length);
+    for(var i = 0; i < size; i++)
+      garbage += Math.floor((Math.random() * 10));
+    
+    ele('link').href = url + garbage;
+
+    ele('sizeURL').innerHTML = url.length;
+    ele('sizeGarbage').innerHTML = garbage.length;
+    ele('sizeFullURL').innerHTML = (url + garbage).length;
+  }    
+  function ele(id) {
+    return document.getElementById(id);
+  }
+</script>
+
+</body>
+</html>

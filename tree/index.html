@@ -38,6 +38,9 @@
     <br>
     Search for value <input type="text" id="search" value=22></input> in the tree
     <button onclick="searchTree()">Search</button>
+    <br>
+    Delete a node <input type="text" id="deleteNode" value=22></input> in the tree
+    <button onclick="deleteNodeFromTree()">Delete</button>
 
     <div class='footer' id='console'></div>
 
@@ -68,6 +71,7 @@
             }
             log("Your Tree created.")
             console.log(tree);
+            printInOrderTraversal()
         }
 
         function printPreOrderTraversal() {
@@ -103,9 +107,19 @@
                 alert(result.success)
             } else {
                 alert(result.failure);
-            }
-            
+            }    
         }
+        
+        function deleteNodeFromTree() {
+            if (!tree) {
+                showList.innerHTML = "Your Tree is EMPTY"
+                return;
+            }
+            var data = parseInt(Id('deleteNode').value);
+            var result = tree.deleteNodeFromTree(data);
+            printInOrderTraversal();
+        }
+
         function printTree(result) {
             var output = '[';
             if (result.code == 0) {

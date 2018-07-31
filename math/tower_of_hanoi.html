@@ -1,0 +1,50 @@
+<title>Tower of Hanoi</title>
+<body>
+    <script>
+
+function init() {
+    var input = parseInt(document.getElementById("inputString").value);
+    if(input) {
+        towerOfHanoi(input);
+    }
+}
+var moves = 0;
+function towerOfHanoi(n) {
+    var towers = {};
+    //Create 3 empty towers.
+    for (var i = 0; i < 3; i++) {
+        towers[i] = new Array();
+    }
+
+    //Insert 'n' disks into tower1
+    for (var i = n; i > 0; i--) {
+        towers[0].push(i);
+    }
+    console.log(towers);
+    towers[0].moveDisks(n, towers[0], towers[1], towers[2]);
+    console.log(towers);
+    console.log('Total number of moves:', moves);
+}
+
+Array.prototype.moveDisks = function (n, towerSource, towerUsing, towerDestination) {
+    if (n < 1)
+        return;
+    if (n == 1) {
+        moves++;
+        towerDestination.push(towerSource.pop());
+        return;
+    }
+    towerSource.moveDisks(n-1, towerSource, towerDestination, towerUsing);
+    towerSource.moveDisks(1, towerSource, towerUsing, towerDestination);
+    towerSource.moveDisks(n-1, towerUsing, towerSource, towerDestination);
+}
+
+
+
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Solve Tower of Hanoi</h3>
+    <input type='text' id='inputString' value='4'></input>
+    <button onclick="init()">Print steps (Console)</button>
+</body>

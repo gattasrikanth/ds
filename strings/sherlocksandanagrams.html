@@ -1,0 +1,118 @@
+<title>Check whether two strings are anagram of each other</title>
+
+<head>
+    <script>
+        function init() {
+            var input = document.getElementById("inputString").value;
+            if (input) {
+                sherlockAndAnagrams(input);
+            }
+        }
+
+        function sherlockAndAnagrams(s) {
+            var charMap = {};
+            var count = 0;
+            //Create a charMap for each of the character from the string.
+            for (var i = 0; i < s.length; i++) {
+                if (typeof charMap[s[i]] == 'undefined') {
+                    charMap[s[i]] = {
+                        'count': 1,
+                        'index': [i]
+                    };
+                } else {
+                    charMap[s[i]].count++;
+                    charMap[s[i]].index.push(i);
+                }
+            }
+            //Now keep only repeating characters and delete all others.
+            Object.keys(charMap).forEach(key => {
+                if (charMap[key].count < 2) {
+                    delete charMap[key];
+                }
+            });
+            //Find subsctrings for each repeating char.
+            console.clear();
+            Object.values(charMap).forEach(value => {
+                if (value.index.length > 1) {
+                for (var x = 0; x < value.index.length; x++) {
+                    var start = value.index[x];
+                    //var end = value.index[1];
+                    var end = value.index[value.index.length-1];
+                    var index = 0;
+                    while (index < (end - start)) {
+                        var s1 = s.substring(start, end - index);
+                        var s2 = s.substring(start + 1 + index, end + 1);
+                        var isAnagram = checkAnagrams(s1, s2);
+                        if (isAnagram)
+                            count++;
+                        //console.log("checking.. ", s1, "-", s2, ":", isAnagram);
+                        index++;
+                    }
+                }
+            } else {
+                //Finding out all substrings that have same starting chars at different indicies.
+                //Pick a starting letter.
+                //And scan through till we get a match or mismatch.
+                for (var x = 0; x < value.index.length; x++) {
+                    var start = value.index[x];
+                    var index = 1;
+                    var end = value.index[x+1];
+                    start++;
+                    end++;
+                    if(start == end-1 ) {
+                        end = value.index[x+2] + 1;
+                    }
+                    while(end < s.length) {
+                        var s1 = s[start];
+                        var s2 = s[end];
+                        if(s1 == s2) {
+                            count++;
+                            start++;
+                            end++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+            });
+            alert(count);
+            return count-1;
+        }
+
+        function checkAnagrams(s1, s2) {
+            console.log("checking for:", s1, "-", s2);
+            if (s1.length != s2.length) {
+                return false;
+            }
+            var anagramMap = {};
+            for (var k = 0; k < s1.length; k++) {
+                if (typeof anagramMap[s1[k]] == 'undefined') {
+                    anagramMap[s1[k]] = 1;
+                } else {
+                    anagramMap[s1[k]]++;
+                }
+            }
+            for (var k = 0; k < s2.length; k++) {
+                if (typeof anagramMap[s2[k]] == 'undefined' || anagramMap[s2[k]] <= 0) {
+                    return false;
+                } else {
+                    anagramMap[s2[k]]--;
+                }
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Check whether two strings are anagram of each other</h3>
+    <input type='text' id='inputString' value='abba'></input>
+    <button onclick="init()">Anagrams?</button>
+</body>
