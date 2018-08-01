@@ -1,0 +1,37 @@
+<title>List all valid parens for a given count</title>
+<body>
+    <script>
+
+function init() {
+    var input = parseInt(document.getElementById("inputString").value);
+    if(input) {
+        generateParens(input);
+    }
+}
+function generateParens(n) {
+    var output = [];
+    addParens(n, n, output, 0);
+}
+
+function addParens(leftParen, rightParen, output, index) {
+    if (leftParen < 0 || rightParen < leftParen)
+        return;
+    if(leftParen == 0 && rightParen == 0) {
+        console.log(output.toString().replace(/,/g, ''));
+    } else {
+        output[index] = '(';
+        addParens(leftParen-1, rightParen, output, index+1);
+        output[index] = ')';
+        addParens(leftParen, rightParen-1, output, index+1);
+    }
+}
+
+
+
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>List all valid parens for a given count</h3>
+    <input type='text' id='inputString' value='4'></input>
+    <button onclick="init()">Print parens (Console)</button>
+</body>
