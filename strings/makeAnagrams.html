@@ -1,0 +1,47 @@
+<title>MakeAnagrams</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = document.getElementById("inputString1").value;
+    var input2 = document.getElementById("inputString2").value;
+    if(input1 && input2) {
+        makeAnagram(input1, input2);
+    }
+}
+
+    var charArray = new Array(26);
+
+
+function makeAnagram(a, b) {
+    charArray.fill(0);
+
+    processString(a, 1);
+    processString(b, -1);
+    console.log( countNonZeroValues());
+}
+
+function processString(a, value) {
+    for (var i = 0; i < a.length; i++) {
+        charArray[a.charCodeAt(i) - 97] += value;
+    }
+}
+
+function countNonZeroValues() {
+    var count = 0;
+    console.log(charArray);
+    for (var i = 0; i < 26; i++) {
+        if (charArray[i] != 0)
+            count++;
+    }
+    return count;
+}
+</script>
+    <br><br><br><br><br><br>
+    <h3>Check whether two strings are anagram of each other</h3>
+    <input type='text' id='inputString1' value='fcrxzwscanmligyxyvym'></input>
+    <input type='text' id='inputString2' value='jxwtrhvujlmrpdoqbisbwhmgpmeoke'></input>
+    <button onclick="init()">Anagrams?</button>
+</body>
+
+

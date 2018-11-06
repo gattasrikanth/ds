@@ -26,6 +26,49 @@ function getLongetsPalindrome(input) {
     console.log(result);
 }
 
+/**
+ * @param {string} s
+ * @return {string}
+ */
+
+var longestPalindrome = function(s) {
+    let index = 0
+    let resultLength = 0
+    let maxRight = 0
+    let center = 0
+    let palindrome = []
+    const length = s.length * 2 + 1
+    
+    for (let i = 0; i < length; i++) {
+        let left = 2 * center - i
+        palindrome[i] = maxRight > i ? Math.min(palindrome[left], maxRight - i) : 0
+        
+        let r = i + 1 + palindrome[i]
+        let l = i - 1 - palindrome[i]
+        
+        while (l >= 0 && r < length && (l % 2 === 0 || s[(r / 2) >> 0] === s[(l / 2) >> 0])) {
+            palindrome[i]++
+            r++
+            l--
+        }
+        
+        if (resultLength < palindrome[i]) {
+            resultLength = palindrome[i]
+            index = (i - resultLength) / 2
+        }
+        
+        if (i + palindrome[i] >= maxRight) {
+            center = i
+            maxRight = center + palindrome[i]
+        }
+    }
+    
+    return s.substring(index, index + resultLength)
+};
+
+longestPalindrome("cbbd");
+
+
 </script>
     <br><br><br><br><br><br>
     <input type='text' id='inputString' value='Cake Pound Steal'></input>

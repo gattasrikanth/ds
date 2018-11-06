@@ -1,0 +1,42 @@
+<title>English Integer</title>
+<body>
+    <script>
+
+function init() {
+    var input = parseInt(document.getElementById("inputString").value);
+    if(input) {
+        convertEnglishInt(input);
+    }
+}
+
+var ones = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+var tens = ['', 'Ten', 'Twenty', 'Thirty', 'Fortey', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+var rest = ['', '', '', 'Hundred', 'Thousand', 'Million', 'Billion', 'Trillion'];
+
+function convertEnglishInt(number) {
+    var output = ""; 
+    var position = number.toString().length;
+    output += convertNumber(number, number, 0, output);
+    console.log(output);
+}
+
+function convertNumber(value, rem, position, output) {
+    value = parseInt(value);
+    if (value == 0 && rem != 0) {
+        return output + " " + ones[rem];
+    }
+    if(position == 1) {
+        output += tens[value]
+    }
+    return output+ convertNumber(value/10, value%10, position+1, output) + " " + rest[position];
+
+}
+
+
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>English Integer Conversion</h3>
+    <input type='text' id='inputString' value='12344'></input>
+    <button onclick="init()">Print (Console)</button>
+</body>

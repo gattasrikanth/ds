@@ -1,0 +1,91 @@
+<script>
+
+function patternMatch(value, pattern) {
+    var val_length = value.length;
+    var pat_length = pattern.length;
+
+    var char1 = pattern[0];
+    var char2 = (char1 == 'a')? 'b' : 'a';
+    var char1Count = count(pattern, char1);
+    var char2Count = count(pattern, char2);
+
+    var char1Len = 0, char2Len = 0;
+    if(val_length % pat_length != 0) {
+        char1Len = val_length % pat_length;
+        char2Len = parseInt(val_length / pat_length);
+    } else {
+        while(val_length % pat_length != 0) {
+            val_length = parseInt(val_length / pat_length);
+        }
+        char1Len = val_length % pat_length;
+        char2Len = parseInt(val_length / pat_length);
+    }
+    //Scan the value string for potential pattern matchings.
+    var char1Str = predictCharString(char1, char1Len, char2Len);
+    var char2Str = predictCharString(char2, char2Len, char1Len);
+    var valIndex = 0;
+    for (var i = 0; i < pattern.length; i++) {
+        if (pattern[i] == char1) {
+            for (var j = 0; j < char1Len; j++) {
+                if (char1Str[j] = value[valIndex]) {
+                    valIndex++;
+                } else {
+                    console.log("Pattern didn't match");
+                    return;
+                }
+            }
+        } else {
+            for (var j = 0; j < char2Len; j++) {
+                if (char2Str[j] = value[valIndex]) {
+                    valIndex++;
+                } else {
+                    console.log("Pattern didn't match");
+                    return;
+                }
+            }
+        }
+    }
+    console.log('Patterns matched.')
+}
+
+function count(string, value) {
+    var count = 0;
+    for (var i = 0; i < string.length; i++) {
+        if(string[i] == value)
+            count++;
+    }
+    return count;
+}
+
+function predictCharString(char, len1, len2) {
+    var index = pattern.indexOf(char);
+    if (index == 0) {
+        return value.substring(0, len1);
+    }
+    var start = 0;
+    for (var i = 0; i < pattern.length; i++) {
+        if(pattern[i] == char) {
+            return value.substr(start, len1);
+        }
+        start += len2;
+    }
+}
+
+var value;
+var pattern;
+
+function init() {
+    value = document.getElementById("value").value;
+    pattern = document.getElementById("pattern").value;
+    if(value && pattern) {
+        patternMatch(value, pattern);
+    }
+}
+
+</script>
+<body>
+    <br><br><br><br><br><br>
+    <input type='text' id='value' value='CatCatGoCatGo'></input>
+    <input type='text' id='pattern' value='aabab'></input>
+    <button onclick="init()">Match Patterns</button>
+</body>

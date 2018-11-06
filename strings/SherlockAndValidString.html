@@ -1,0 +1,73 @@
+<title>Sherlock And Valid String</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = document.getElementById("inputString1").value;
+    //var input2 = document.getElementById("inputString2").value;
+    if(input1) {
+        console.log(isValid(input1));
+    }
+}
+
+var frequencies = new Array(26);
+
+
+// Complete the isValid function below.
+function isValid(s) {
+    //Create an empty array
+    frequencies.fill(0);
+    for (var i = 0; i < s.length; i++) {
+        frequencies[s.charCodeAt(i) - 97] += 1 ;
+    }
+
+    frequencies.sort();
+    var isValid = true;
+    var tempFreq = frequencies[25];
+    for (var i = 0; i < 26; i++) {
+        if (frequencies[i] != 0 && frequencies[i] != tempFreq) {
+            isValid = false;
+            break;
+        }
+    }
+    if(isValid) {
+        isValid = false;
+        return 'YES';
+    }
+
+    var hashTable = {};
+
+    for (var i = 0; i < 26; i++) {
+        if (frequencies[i] != 0) {
+            var freq = frequencies[i];
+            if (hashTable[freq] == undefined) {
+                hashTable[freq] = 'visited';
+                var isDelAllowed = 1;
+                for (var j = 25; j > 0; j--) {
+                    if(frequencies[j] == 0)
+                        break;
+                    if (isDelAllowed < 0) {
+                        j = 0;
+                        break;
+                    }
+                    if (frequencies[j] - 1 == freq || frequencies[j] + 1 == freq) {
+                        isDelAllowed--;
+                    } else isDelAllowed++;
+                }
+                if (isDelAllowed == 0) {
+                    return 'YES';
+                }
+            }
+        }
+    }
+    return 'NO';
+}
+
+</script>
+    <br><br><br><br><br><br>
+    <h3>Check whether two strings are anagram of each other</h3>
+    <input type='text' id='inputString1' value='fcrxzwscanmligyxyvym'></input>
+    <button onclick="init()">IsValid?</button>
+</body>
+
+

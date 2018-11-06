@@ -1,0 +1,52 @@
+<title>Common Child (Longer Common Subsequense)</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = document.getElementById("inputString1").value;
+    var input2 = document.getElementById("inputString2").value;
+    if(input1 && input2) {
+        console.log(commonChild(input1, input2));
+    }
+}
+
+// Complete the commonChild function below.
+function commonChild(s1, s2) {
+    var memo = new Array(s1.length);
+    for (var i = 0; i < memo.length; i++) {
+        memo[i] = new Array(s2.length);
+          for (var j = 0; j < memo[i].length; j++) {
+            memo[i][j] = undefined;
+        }
+    }
+/*    var memo = new Array(s1.length).fill([]);
+    memo.forEach(function(item, index) {
+       var row = new Array(s2.length).fill(-1);
+       item.push(row); 
+    });*/
+    return commonChildHelper(memo, s1, s2, s1.length-1, s2.length-1);
+}
+
+function commonChildHelper(memo, a, b, aL, bL) {
+    var aLen = aL;
+    var bLen = bL;
+    //Memo check:
+    if (memo[aLen][bLen] !== undefined)
+        return memo[aLen][bLen];
+    //BaseCase:
+    if (aLen === 0 || bLen === 0)
+        return 0
+    if (a[aLen] === b[bLen])
+        return 1 + commonChildHelper(memo, a, b, aLen-1, bLen-1);
+    var commonAChild = commonChildHelper(memo, a, b, aLen-1, bLen);
+    var commonBChild = commonChildHelper(memo, a, b, aLen, bLen-1);
+    memo[aLen][bLen] = Math.max(commonAChild, commonBChild);
+    return memo[aL][bL];
+}
+</script>
+    <br><br><br><br><br><br>
+    <h3>Common Child</h3>
+    <input type='text' id='inputString1' value='SHINCHAN'></input>
+    <input type='text' id='inputString2' value='NOHARAAA'></input>
+    <button onclick="init()">Common Child?</button>
+</body>

@@ -1,0 +1,51 @@
+<title>Count the number of triplets with the given Common Ratio</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            console.clear();
+            array = document.getElementById("inputArray").value.split(',');
+            for (var x = 0; x < array.length; x++)
+               array[x] = parseInt(array[x]);
+            if (array) {
+                pushZerosToEnd(array);
+            }
+        }
+
+
+function pushZerosToEnd(array) {
+    let lai = 0;
+    for (let k = 0; k < array.length; k++)
+        if (array[k] === 0) {
+            lai = k;
+            break;
+        }
+
+    for (let i = lai; i < array.length; i++) {
+        if (array[i] != 0) {
+            let temp = array[lai];
+            array[lai] = array[i];
+            array[i] = temp;
+            lai++;
+        }
+    }
+    console.log(array);
+}
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Given array of integers, push all zeros to end.</h3>
+    Input Array:
+    <input type='text' id='inputArray' value='1,2,3,0,0,4,4'></input> 
+    <br>
+    <button onclick="init()">Push Zeros to End</button>
+</body>

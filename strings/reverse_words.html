@@ -3,9 +3,49 @@
 function reverseWords() {
     var input = document.getElementById("reverse").value;
     if(input) {
-        reverse(input);
+        reverseWordsLatest(input.split(''));
     }
 }
+
+function reverseWordsLatest(message) {
+
+// Decode the message by reversing the words
+var len = message.length;
+if (len < 1)
+  return;
+reverseUsingIndexes(message, 0, len - 1);
+//console.log("*** AFTER ***", message.join(''),"***")
+let start = 0;
+let end;
+message.forEach((char, index) => {
+  //console.log(index-1);
+   console.log(message[index], char)
+  if (char === ' ' || (index+1) === len) {
+    reverseUsingIndexes(message, start, index);
+    start = index+1;
+  }
+});
+console.log(message.join(''))
+}
+
+function reverseUsingIndexes(message, start, end ) {
+// console.log('****', start, message[start], end, message[end]);
+while (start < end) {
+  swap(message, start, end);
+  start++;
+  end--;
+}
+}
+
+function swap(message, start, end) {
+var temp = message[start];
+message[start] = message[end];
+message[end] = temp;
+}
+
+
+
+
 
 function reverse(input) {
     //Create a new array with the given string.

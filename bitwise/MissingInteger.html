@@ -1,0 +1,67 @@
+<title>Missing Integer</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            var randomArray = new Array();
+            for(var i = 0; i < 256; i++)
+            //randomArray[i] = Math.floor((Math.random() * 100));
+            randomArray[i] = i + 1;
+
+        var random = Math.floor((Math.random() * 100));
+        randomArray[random] = null;//random - 1;
+        console.log("Random bit flipped is ", random); 
+
+            findMissingNumber(randomArray);
+
+    }
+
+        function findMissingNumber(array) {
+            var length = array.length;
+            var bits = new Int8Array(length/8);
+            console.log(array);
+            
+            for (var i = 0; i < length; i++) {
+                var n = array[i];
+                var index = parseInt(n/8);      
+                if (n == 94) {
+                    console.log('Should be in ', index, ' bucket');
+                }          
+                bits[index] |= 1 << (n % 8);
+            }
+            console.log(bits);
+            console.log("Printing sorted source");
+            console.log(array.sort(function(a, b) {return a - b;}));
+            var missing = new Array();
+            //Print Missing numbers?:
+            for (var i = 0; i < bits.length; i++) {
+                for(var j = 0; j < 8; j++) {
+                    var rev = bits[i] & (1 << j);
+                    if (rev == 0) {
+                        console.log(i * 8 + j);
+                        missing.push(i * 8 + j);
+                    }
+                }
+            }
+            console.log(missing);
+
+
+        }
+
+
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Find missing Int</h3>
+    <button onclick="init()">Missing Int</button>
+</body>

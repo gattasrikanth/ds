@@ -1,0 +1,76 @@
+<title>Count the number of triplets with the given Common Ratio</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            console.clear();
+            array = document.getElementById("inputArray").value.split(',');
+            var r = parseInt(document.getElementById("ratio").value);
+            for (var x = 0; x < array.length; x++)
+               array[x] = parseInt(array[x]);
+            if (array && r) {
+                activityNotifications(array, r);
+            }
+        }
+
+// Complete the activityNotifications function below.
+function activityNotifications(expenditure, d) {
+    //Is d even?
+    var midValues = [];
+    for (var i = 0; i < d; i++) {
+        midValues.push(expenditure[i]);
+    }
+    
+    
+    var midExp;
+    midExp = calculate(midValues, d);
+    
+    //var midExp = midValues[midIndex];
+    
+    var count = 0;
+    
+    for (var i = d; i < expenditure.length; i++) {
+        var todayExp = expenditure[i];
+        if (todayExp >= (2 * midExp)) {
+            count++;
+        }
+        midValues.shift();
+        midValues.push(todayExp);
+        midExp = calculate(midValues, d);
+    }
+    return count;
+}
+
+function calculate(midValues, d) {
+    midValues.sort(function(a, b) {return a-b;});
+    var midIndex, midExp;
+    //var float midExp;
+    if (d % 2 == 0) {
+        midIndex = (d - 2) / 2;
+        midExp = (midValues[midIndex] + midValues[midIndex + 1])/ 2;
+    } else {
+        midIndex = (d - 1) / 2;
+        midExp = midValues[midIndex];
+    }
+    return midExp;
+}
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Count the number of Triplets with Common Ratio</h3>
+    Input Array:
+    <input type='text' id='inputArray' value='1,2,3,4,4'></input> 
+    <input type='text' id='ratio' value='4'></input> 
+    <br>
+    <button onclick="init()">Count Triplets</button>
+</body>

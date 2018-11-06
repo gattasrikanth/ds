@@ -1,0 +1,76 @@
+<title>Merge Sort Algorithm</title>
+
+<body>
+    <script>
+        var array,queue;
+        qStart = 0;
+        qEnd = 0;
+        var result = new Array();
+
+        function init() {
+            array = document.getElementById("inputArray").value.split(',');
+            for (var x = 0; x < array.length; x++)
+               array[x] = parseInt(array[x]);
+            if (array) {
+                mergeSortArray(array);
+            }
+        }
+
+        function mergeSortArray(array) {
+            var tempArray = new Array(array.length);
+            console.log("Before Sort");
+            console.log(array);
+            mergeSort(array, tempArray, 0, array.length - 1);
+            console.log("After Sort");
+            console.log(array);
+        }
+
+        function mergeSort(array, tempArray, low, high) {
+            if (low < high) {
+                var middle = parseInt((low + high) / 2);                
+                mergeSort(array, tempArray, low, middle);
+                mergeSort(array, tempArray, middle + 1, high);
+                mergeTwoHalves(array, tempArray, low, middle, high);                
+            }
+        }
+
+        function mergeTwoHalves(array, tempArray, low, middle, high) {
+            for (var i = low; i <= high; i++) {
+                tempArray[i] = array[i];
+            }
+            var tempLeft = low;
+            var tempRight = middle + 1;
+            var current = low;
+
+            while (tempLeft <= middle && tempRight <= high) {
+                if (tempArray[tempLeft] <= tempArray[tempRight]) {
+                    array[current] = tempArray[tempLeft];
+                    tempLeft++;
+                } else {
+                    array[current] = tempArray[tempRight]
+                    tempRight++;
+                }
+                current++;
+            }
+
+            var remaining = middle - tempLeft;
+
+            for (var i = 0; i <= remaining; i++) {
+                array[current + i] = tempArray[tempLeft + i];
+            }
+        }
+
+
+    </script>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h3>Merge Sort</h3>
+    Input Array:
+    <input type='text' id='inputArray' value='8,5,10,7,9,4,15,12,90,13'></input>
+    <br>
+    <button onclick="init()">MergeSort</button>
+</body>

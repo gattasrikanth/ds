@@ -1,0 +1,47 @@
+<title>Special Palindrome Again</title>
+<body>
+    <script>
+
+function init() {
+    var input1 = document.getElementById("inputString1").value;
+    //var input2 = document.getElementById("inputString2").value;
+    if(input1) {
+        console.log(substrCount(input1));
+    }
+}
+
+// Complete the substrCount function below.
+function substrCount(s) {
+    var n = s.length;
+    var count = n;
+    //Case#1. All chars same palindromes
+    for (var i = 0; i < n; i++) {
+        var j = i + 1;
+        while (j < n && s[i] == s[j]) {
+            count++;
+            j++;
+        }
+    }
+    // Case#2. All chars same except one mid.
+    for (var i = 1; i < n - 1; i++) {
+        var left = i - 1;
+        var right = i + 1;
+        var curr = s[left];
+        while (left > -1 && right < n) {
+           // console.log(i, s.substring(left,right+1))
+            if (curr != s[i] && curr == s[right] & curr == s[left]) {
+                count++;
+                left--;
+                right++                
+            }
+            else break;
+        }        
+    }
+    return count;
+}
+</script>
+    <br><br><br><br><br><br>
+    <h3>Special Palindrome Again</h3>
+    <input type='text' id='inputString1' value='abcbaba'></input>
+    <button onclick="init()">IsValid?</button>
+</body>

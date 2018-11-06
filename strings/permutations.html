@@ -30,10 +30,64 @@ function permute(input, output, length, used, position) {
     }
 }
 
+    function permutations_NoDups (inputstring) { 
+    count = 0;
+    var used = {};
+    var length = inputstring.length;
+    var output = new Array();
+    permute_NoDups(inputstring, output, length, used, 0);
+    console.log(count)
+}
+
+function permute_NoDups(input, output, length, used, position) {
+    //Base case:
+    if(position == length) {
+        count++;
+        console.log(output.toString());
+        return;
+    }
+    for (var j = 0; j < length; j++) {
+        let char = input[j];
+        if(used[char])
+            continue;
+        output[position] = input[j];
+        used[char] = true;
+        permute_NoDups(input, output, length, used, position+1)
+        used[char] = false;
+    }
+}
+
+function minumumChange_Memo(amount, coins, output, memo) {
+    if (amount === 0)
+        return 0;
+    var min = amount;
+    for (var i = 0; i < coins.length; i++) {
+        let remaining = amount - coins[i];
+        if ( remaining >= 0) {
+            let c;
+            if (memo.hasOwnProperty(remaining)) {
+                c = memo[remaining];
+            } else {
+                c = minumumChange_Memo(amount-coins[i], coins, output, memo);
+                memo[remaining] = c;
+                output.push({'cal': amount-coins[i]});
+            }
+            min = Math.min(min, c+1); 
+        }
+    }
+    return min;
+}
+
 function printPermutations() {
     var input = document.getElementById("permute").value;
     if(input) {
         permutations(input);
+    }
+}
+function printPermutations_NoDupes() {
+    var input = document.getElementById("permute").value;
+    if(input) {
+        permutations_NoDups(input);
     }
 }
 </script>
@@ -41,4 +95,5 @@ function printPermutations() {
     <br><br><br><br><br><br>
     <input type='text' id='permute' value='abcdefghijkl'></input>
     <button onclick="printPermutations()">Permute</button>
+    <button onclick="printPermutations_NoDupes()">Permute (No Dupes)</button>
 </body>
