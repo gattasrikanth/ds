@@ -1,12 +1,13 @@
-var BinarySearchTree = function () {
+var Trie = function () {
     this.ROOT = null;
 }
 
 var Node = function (data) {
-    this.data = data;
-    this.left = null;
-    this.right = null;
+    this.map = new Map();
+    map[data] = data;
+    let isWord = false;
 }
+
 /**
  * A common message object to communicate the list actions.
  */
